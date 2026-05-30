@@ -1,0 +1,44 @@
+{
+  "model": "pythia-125m",
+  "method": "ssc_lasso",
+  "k": 400,
+  "total_clusters": 400,
+  "total_tokens": 10000,
+  "category_counts": {
+    "CONTENT": 156,
+    "FORMATTING": 63,
+    "SYNTACTIC": 84,
+    "NUMERIC": 47,
+    "FUNCTION_WORDS": 26,
+    "PROPER_NOUNS": 24
+  },
+  "category_sizes": {
+    "CONTENT": 8887,
+    "FORMATTING": 476,
+    "SYNTACTIC": 279,
+    "NUMERIC": 221,
+    "FUNCTION_WORDS": 79,
+    "PROPER_NOUNS": 58
+  },
+  "category_cluster_pct": {
+    "CONTENT": 39.0,
+    "FORMATTING": 15.75,
+    "SYNTACTIC": 21.0,
+    "NUMERIC": 11.75,
+    "FUNCTION_WORDS": 6.5,
+    "PROPER_NOUNS": 6.0
+  },
+  "category_token_pct": {
+    "CONTENT": 88.87,
+    "FORMATTING": 4.76,
+    "SYNTACTIC": 2.79,
+    "NUMERIC": 2.21,
+    "FUNCTION_WORDS": 0.79,
+    "PROPER_NOUNS": 0.58
+  },
+  "content_bearing_pct": 45.0,
+  "repetitive_pct": 0.0,
+  "cross_model_pearson_r_cluster_share": 0.947,
+  "cross_model_pearson_r_token_share": 0.9972,
+  "cross_model_pearson_r": 0.9972
+}

@@ -1,0 +1,28 @@
+{
+  "model": "pythia-19m",
+  "paradigm": "SSC-Lasso",
+  "fp_subdir": "quanta_fingerprint_ssc-lasso",
+  "n_docs": 1281,
+  "n_human": 784,
+  "n_ai": 497,
+  "n_clusters": 400,
+  "n_seeds": 5,
+  "n_folds": 5,
+  "full_mcc_mean": 0.8835230320964238,
+  "full_mcc_std": 0.0021338394809964447,
+  "full_mcc_per_seed": [
+    0.8833902275194074,
+    0.886513963291895,
+    0.8804793719093595,
+    0.8821121417564617,
+    0.8851194560049951
+  ],
+  "surface_mcc_mean": 0.6592100876486902,
+  "surface_mcc_std": 0.0033251991486634245,
+  "delta": 0.22431294444773364,
+  "max_1q_mcc": 0.7108873761323118,
+  "max_1q_cluster": 18,
+  "permutation_mcc": -0.022710488379887584,
+  "flag": "distributed",
+  "mega_cluster": null
+}

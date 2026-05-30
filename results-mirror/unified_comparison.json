@@ -1,0 +1,601 @@
+{
+  "models": [
+    {
+      "model": "pythia-19m",
+      "paper_slope": -1.237,
+      "methods": [
+        {
+          "method": "Spectral",
+          "config": "k=400 / envelope over 30 k-values",
+          "envelope_slope": -1.1943557646718521,
+          "delta_vs_paper": 0.042644235328147984,
+          "n_configs": 30,
+          "powerlaw": {
+            "n_clusters": 400,
+            "alpha": 2.1572698332363314,
+            "xmin": 11.0,
+            "sigma": 0.07454630316129673,
+            "n_tail": 241,
+            "ks_stat": 0.03656574831112647,
+            "bic": {
+              "power_law": 1970.2454686721899,
+              "lognormal": 2051.805533958936,
+              "exponential": 2076.097269893652
+            },
+            "best_bic_model": "power_law",
+            "delta_bic": 81.56006528674607,
+            "bic_strength": "strong"
+          },
+          "n_clusters_at_k400": 400,
+          "silhouette_k400": 0.022159524347989894,
+          "ari_vs_spectral": 1.0,
+          "notes": "Baseline paradigm (graph-cut)."
+        },
+        {
+          "method": "Leiden",
+          "config": "apples-to-apples: best kNN=10 (8 resolutions)",
+          "envelope_slope": -1.071184159560238,
+          "delta_vs_paper": 0.16581584043976205,
+          "n_configs": 8,
+          "powerlaw": {
+            "n_clusters": 3504,
+            "alpha": 2.5947509765624988,
+            "xmin": 2.0,
+            "sigma": 0.030328107370120247,
+            "n_tail": 2765,
+            "ks_stat": 0.10877679762026005,
+            "bic": {
+              "power_law": 9233.178161267158,
+              "lognormal": 9198.296194367713,
+              "exponential": 9118.045463123906
+            },
+            "best_bic_model": "exponential",
+            "delta_bic": 80.25073124380651,
+            "bic_strength": "strong"
+          },
+          "best_config": "knn=10",
+          "best_config_k": 3504,
+          "full_sweep_slope": -1.071184159560238,
+          "full_sweep_n_configs": 36,
+          "notes": "Per-kNN res-sweep envelope. Full 36-config envelope: -1.0712.",
+          "best_silhouette": 0.03135562256043893
+        },
+        {
+          "method": "SSC",
+          "config": "apples-to-apples: best (d,\u03b1)=(500, 0.0001) (6 k-values)",
+          "envelope_slope": -1.2451441301536168,
+          "delta_vs_paper": 0.008144130153616702,
+          "n_configs": 6,
+          "powerlaw": {
+            "n_clusters": 400,
+            "alpha": 2.0215634595373357,
+            "xmin": 6.0,
+            "sigma": 0.08101525214977973,
+            "n_tail": 159,
+            "ks_stat": 0.0477994111736344,
+            "bic": {
+              "power_law": 1176.200727934387,
+              "lognormal": 1260.8741221832538,
+              "exponential": 1586.855239170807
+            },
+            "best_bic_model": "power_law",
+            "delta_bic": 84.67339424886677,
+            "bic_strength": "strong"
+          },
+          "best_config": "d=500, \u03b1=0.0001",
+          "best_config_k": 400,
+          "full_sweep_slope": -1.6260680610408955,
+          "full_sweep_n_configs": 48,
+          "notes": "Per-(d,\u03b1) k-sweep envelope (apples-to-apples with spectral). Full 48-config envelope: -1.6261.",
+          "best_silhouette": 0.009199563413858414
+        },
+        {
+          "method": "SSC-OMP",
+          "config": "apples-to-apples: best (d,K)=(100, 5) (6 k-values)",
+          "envelope_slope": -1.4486831391180508,
+          "delta_vs_paper": 0.2116831391180507,
+          "n_configs": 6,
+          "powerlaw": {
+            "n_clusters": 400,
+            "alpha": 2.1234489742419362,
+            "xmin": 10.0,
+            "sigma": 0.08772662629862944,
+            "n_tail": 164,
+            "ks_stat": 0.028604550951703556,
+            "bic": {
+              "power_law": 1329.520407833095,
+              "lognormal": 1417.926455006562,
+              "exponential": 1578.3038089589545
+            },
+            "best_bic_model": "power_law",
+            "delta_bic": 88.40604717346696,
+            "bic_strength": "strong"
+          },
+          "best_config": "d=100, K=5",
+          "best_config_k": 400,
+          "full_sweep_slope": -1.736910642841064,
+          "full_sweep_n_configs": 120,
+          "notes": "Per-(d,K) k-sweep envelope (apples-to-apples with spectral). Full 120-config envelope: -1.7369.",
+          "best_silhouette": -0.028946535661816597
+        },
+        {
+          "method": "Hierarchical",
+          "config": "apples-to-apples: best linkage=complete (10 k-values)",
+          "envelope_slope": -1.214962421835503,
+          "delta_vs_paper": 0.02203757816449703,
+          "n_configs": 10,
+          "powerlaw": {
+            "n_clusters": 400,
+            "alpha": 2.9736287901275613,
+            "xmin": 18.0,
+            "sigma": 0.1292967210153588,
+            "n_tail": 233,
+            "ks_stat": 0.05484292417294995,
+            "bic": {
+              "power_law": 1729.5051738102914,
+              "lognormal": 1811.004995487909,
+              "exponential": 1760.0602049222603
+            },
+            "best_bic_model": "power_law",
+            "delta_bic": 30.5550311119689,
+            "bic_strength": "strong"
+          },
+          "best_config": "linkage=complete",
+          "best_config_k": 400,
+          "best_silhouette": 0.017050902689447207,
+          "full_sweep_slope": -1.214962421835503,
+          "full_sweep_n_configs": 30,
+          "notes": "Per-linkage k-sweep envelope (apples-to-apples with spectral). Full 30-config envelope across all 3 linkages: -1.2150."
+        },
+        {
+          "method": "HDBSCAN",
+          "config": "best: mcs20",
+          "envelope_slope": -0.6283020971774896,
+          "delta_vs_paper": 0.6086979028225105,
+          "n_configs": 12,
+          "powerlaw": {
+            "n_clusters": 15,
+            "alpha": 2.729549120488764,
+            "xmin": 28.0,
+            "sigma": 0.46224144589036836,
+            "n_tail": 14,
+            "ks_stat": 0.08922377376058255,
+            "bic": {
+              "power_law": 126.87755780864984,
+              "lognormal": 134.35765605423381,
+              "exponential": 129.3203237870544
+            },
+            "best_bic_model": "power_law",
+            "delta_bic": 2.442765978404566,
+            "bic_strength": "weak"
+          },
+          "best_config": "mcs20",
+          "best_config_k": 15,
+          "best_noise_frac": 0.9117,
+          "best_silhouette": 0.15973660483272714,
+          "ari_vs_spectral": 0.003467982527556362,
+          "nmi_vs_spectral": 0.14951764350997046,
+          "notes": "Density-based. 91% noise at best config; envelope flattens due to noise-rejection truncating tail."
+        },
+        {
+          "method": "ORCLUS",
+          "config": "best: d100_l20_K50 (env d=100, l=20)",
+          "envelope_slope": -1.0190252412394578,
+          "delta_vs_paper": 0.2179747587605423,
+          "n_configs": 36,
+          "powerlaw": {
+            "n_clusters": 50,
+            "alpha": 2.819801798975031,
+            "xmin": 110.0,
+            "sigma": 0.26266576462749985,
+            "n_tail": 48,
+            "ks_stat": 0.12633810512340987,
+            "bic": {
+              "power_law": 548.9055630212448,
+              "lognormal": 542.6067030811643,
+              "exponential": 535.1091469319291
+            },
+            "best_bic_model": "exponential",
+            "delta_bic": 7.497556149235152,
+            "bic_strength": "moderate"
+          },
+          "best_config": "d100_l20_K50",
+          "best_config_k": 51,
+          "best_noise_frac": null,
+          "best_silhouette": 0.0037191568289266543,
+          "ari_vs_spectral": 0.04235133373633864,
+          "nmi_vs_spectral": 0.37175637083389973,
+          "notes": "Arbitrarily-oriented projected clustering (ORCLUS, Aggarwal/Yu 2000). No noise rejection \u2014 every point is partitioned, sidestepping the 4C/COPAC/ERiC locality bottleneck. Full-sweep envelope: -1.0058."
+        },
+        {
+          "method": "4C",
+          "config": "best: d200_t0.7_mu20 (env d=200, \u03c4=0.7)",
+          "envelope_slope": -1.254106058091296,
+          "delta_vs_paper": 0.01710605809129584,
+          "n_configs": 48,
+          "powerlaw": {
+            "n_clusters": 22,
+            "alpha": 2.548967062940548,
+            "xmin": 20.0,
+            "sigma": 0.338012324519928,
+            "n_tail": 21,
+            "ks_stat": 0.23520619238588497,
+            "bic": {
+              "power_law": 181.480541641943,
+              "lognormal": 178.24367531968608,
+              "exponential": 173.4429624515472
+            },
+            "best_bic_model": "exponential",
+            "delta_bic": 4.8007128681388735,
+            "bic_strength": "weak"
+          },
+          "best_config": "d200_t0.7_mu20",
+          "best_config_k": 22,
+          "best_noise_frac": 0.9143,
+          "best_silhouette": 0.16864500439089353,
+          "ari_vs_spectral": 0.0033625880893726344,
+          "nmi_vs_spectral": 0.16122697531682703,
+          "notes": "Subspace correlation clustering (Zimek family). 91% noise at best config."
+        },
+        {
+          "method": "COPAC",
+          "config": "best: d200_t0.7_mu10 (env d=200, \u03c4=0.7)",
+          "envelope_slope": -0.6480632177214334,
+          "delta_vs_paper": 0.5889367822785667,
+          "n_configs": 48,
+          "powerlaw": {
+            "n_clusters": 17,
+            "alpha": 2.999999999999999,
+            "xmin": 14.0,
+            "sigma": 0.9999999999999996,
+            "n_tail": 4,
+            "ks_stat": 0.16972385290171765,
+            "bic": {},
+            "best_bic_model": null,
+            "delta_bic": null,
+            "bic_strength": null
+          },
+          "best_config": "d200_t0.7_mu10",
+          "best_config_k": 17,
+          "best_noise_frac": 0.9782,
+          "best_silhouette": 0.24208100188188572,
+          "ari_vs_spectral": 0.0007176304963731946,
+          "nmi_vs_spectral": 0.04737861693526347,
+          "notes": "Subspace correlation clustering (COPAC = 4C + \u03bb_P partitioning, Zimek family). 98% noise at best config."
+        },
+        {
+          "method": "ERiC",
+          "config": "best: d200_t0.7_eq1.0_mu10 (env d=200, \u03c4=0.7, \u03b5q=1.0)",
+          "envelope_slope": -0.6515629587386454,
+          "delta_vs_paper": 0.5854370412613547,
+          "n_configs": 288,
+          "powerlaw": {
+            "n_clusters": 17,
+            "alpha": 2.999999999999999,
+            "xmin": 10.0,
+            "sigma": 0.4850712500726657,
+            "n_tail": 17,
+            "ks_stat": 0.21446006165887643,
+            "bic": {
+              "power_law": 86.33895403896419,
+              "lognormal": 87.90255238471447,
+              "exponential": 79.12913263706949
+            },
+            "best_bic_model": "exponential",
+            "delta_bic": 7.2098214018947,
+            "bic_strength": "moderate"
+          },
+          "best_config": "d200_t0.7_eq1.0_mu10",
+          "best_config_k": 17,
+          "best_noise_frac": 0.978,
+          "best_silhouette": 0.24737601681894533,
+          "ari_vs_spectral": 0.0007195810954236056,
+          "nmi_vs_spectral": 0.04748605269018966,
+          "notes": "Subspace correlation clustering (ERiC = COPAC + affine distance + containment hierarchy, Zimek family). 98% noise at best config. 17 containment pair(s) found.",
+          "n_containments": 17
+        }
+      ]
+    },
+    {
+      "model": "pythia-125m",
+      "paper_slope": -1.237,
+      "methods": [
+        {
+          "method": "Spectral",
+          "config": "k=400 / envelope over 30 k-values",
+          "envelope_slope": -1.241152358320991,
+          "delta_vs_paper": 0.004152358320990812,
+          "n_configs": 30,
+          "powerlaw": {
+            "n_clusters": 400,
+            "alpha": 2.0451187496780143,
+            "xmin": 10.0,
+            "sigma": 0.06774498650954713,
+            "n_tail": 238,
+            "ks_stat": 0.05238875503222784,
+            "bic": {
+              "power_law": 1990.2103941525672,
+              "lognormal": 2057.339336440197,
+              "exponential": 2083.939187098325
+            },
+            "best_bic_model": "power_law",
+            "delta_bic": 67.12894228762957,
+            "bic_strength": "strong"
+          },
+          "n_clusters_at_k400": 400,
+          "silhouette_k400": 0.0009748419016629626,
+          "ari_vs_spectral": 1.0,
+          "notes": "Baseline paradigm (graph-cut)."
+        },
+        {
+          "method": "Leiden",
+          "config": "apples-to-apples: best kNN=10 (8 resolutions)",
+          "envelope_slope": -0.9809488550611396,
+          "delta_vs_paper": 0.2560511449388605,
+          "n_configs": 8,
+          "powerlaw": {
+            "n_clusters": 4150,
+            "alpha": 2.8808349609374995,
+            "xmin": 2.0,
+            "sigma": 0.034992656848659834,
+            "n_tail": 2889,
+            "ks_stat": 0.06548555052562677,
+            "bic": {
+              "power_law": 8259.680632799204,
+              "lognormal": 8608.77322030082,
+              "exponential": 8519.561282268669
+            },
+            "best_bic_model": "power_law",
+            "delta_bic": 259.8806494694654,
+            "bic_strength": "strong"
+          },
+          "best_config": "knn=10",
+          "best_config_k": 4150,
+          "full_sweep_slope": -0.9809488550611396,
+          "full_sweep_n_configs": 36,
+          "notes": "Per-kNN res-sweep envelope. Full 36-config envelope: -0.9809.",
+          "best_silhouette": 0.02049870560284205
+        },
+        {
+          "method": "SSC",
+          "config": "apples-to-apples: best (d,\u03b1)=(200, 0.01) (6 k-values)",
+          "envelope_slope": -1.3287310516497903,
+          "delta_vs_paper": 0.09173105164979023,
+          "n_configs": 6,
+          "powerlaw": {
+            "n_clusters": 400,
+            "alpha": 1.9395301923751944,
+            "xmin": 2.0,
+            "sigma": 0.0593026198968625,
+            "n_tail": 251,
+            "ks_stat": 0.037244034027849815,
+            "bic": {
+              "power_law": 1312.1293763473861,
+              "lognormal": 1443.983626592458,
+              "exponential": 2330.2701780389325
+            },
+            "best_bic_model": "power_law",
+            "delta_bic": 131.85425024507185,
+            "bic_strength": "strong"
+          },
+          "best_config": "d=200, \u03b1=0.01",
+          "best_config_k": 400,
+          "full_sweep_slope": -1.7512606085995983,
+          "full_sweep_n_configs": 120,
+          "notes": "Per-(d,\u03b1) k-sweep envelope (apples-to-apples with spectral). Full 120-config envelope: -1.7513.",
+          "best_silhouette": -0.045228224247694016
+        },
+        {
+          "method": "SSC-OMP",
+          "config": "apples-to-apples: best (d,K)=(200, 20) (6 k-values)",
+          "envelope_slope": -1.3034459704372063,
+          "delta_vs_paper": 0.06644597043720624,
+          "n_configs": 6,
+          "powerlaw": {
+            "n_clusters": 400,
+            "alpha": 1.9622005305303498,
+            "xmin": 5.0,
+            "sigma": 0.0709343642173373,
+            "n_tail": 184,
+            "ks_stat": 0.04661084676390015,
+            "bic": {
+              "power_law": 1330.972357024293,
+              "lognormal": 1423.4173041922443,
+              "exponential": 1789.7853145928507
+            },
+            "best_bic_model": "power_law",
+            "delta_bic": 92.44494716795134,
+            "bic_strength": "strong"
+          },
+          "best_config": "d=200, K=20",
+          "best_config_k": 400,
+          "full_sweep_slope": -1.6853433410473468,
+          "full_sweep_n_configs": 120,
+          "notes": "Per-(d,K) k-sweep envelope (apples-to-apples with spectral). Full 120-config envelope: -1.6853.",
+          "best_silhouette": -0.04035068303346634
+        },
+        {
+          "method": "Hierarchical",
+          "config": "apples-to-apples: best linkage=complete (10 k-values)",
+          "envelope_slope": -1.2486141780089097,
+          "delta_vs_paper": 0.011614178008909626,
+          "n_configs": 10,
+          "powerlaw": {
+            "n_clusters": 400,
+            "alpha": 2.975259746148285,
+            "xmin": 16.0,
+            "sigma": 0.1123686009298476,
+            "n_tail": 309,
+            "ks_stat": 0.10220636236677688,
+            "bic": {
+              "power_law": 2214.7554904283284,
+              "lognormal": 2272.7188893304196,
+              "exponential": 2214.7730888932315
+            },
+            "best_bic_model": "power_law",
+            "delta_bic": 0.01759846490313066,
+            "bic_strength": "weak"
+          },
+          "best_config": "linkage=complete",
+          "best_config_k": 400,
+          "best_silhouette": 0.008400722450931576,
+          "full_sweep_slope": -1.2486141780089097,
+          "full_sweep_n_configs": 30,
+          "notes": "Per-linkage k-sweep envelope (apples-to-apples with spectral). Full 30-config envelope across all 3 linkages: -1.2486."
+        },
+        {
+          "method": "HDBSCAN",
+          "config": "best: mcs20",
+          "envelope_slope": -0.48385644381107623,
+          "delta_vs_paper": 0.7531435561889239,
+          "n_configs": 12,
+          "powerlaw": {
+            "n_clusters": 10,
+            "alpha": 2.635433901172079,
+            "xmin": 21.0,
+            "sigma": 0.5171696090358486,
+            "n_tail": 10,
+            "ks_stat": 0.12744310731468,
+            "bic": {
+              "power_law": 87.37032177942594,
+              "lognormal": 92.97826005943868,
+              "exponential": 90.12744768485327
+            },
+            "best_bic_model": "power_law",
+            "delta_bic": 2.75712590542733,
+            "bic_strength": "weak"
+          },
+          "best_config": "mcs20",
+          "best_config_k": 10,
+          "best_noise_frac": 0.9498,
+          "best_silhouette": 0.23303849300559842,
+          "ari_vs_spectral": 0.0017072051490414398,
+          "nmi_vs_spectral": 0.07611245685859067,
+          "notes": "Density-based. 95% noise at best config; envelope flattens due to noise-rejection truncating tail."
+        },
+        {
+          "method": "ORCLUS",
+          "config": "best: d200_l20_K50 (env d=200, l=20)",
+          "envelope_slope": -0.9998030456822714,
+          "delta_vs_paper": 0.2371969543177287,
+          "n_configs": 36,
+          "powerlaw": {
+            "n_clusters": 50,
+            "alpha": 2.972370640053094,
+            "xmin": 120.0,
+            "sigma": 0.30434339712706776,
+            "n_tail": 42,
+            "ks_stat": 0.11758843724742951,
+            "bic": {
+              "power_law": 478.2966153202085,
+              "lognormal": 486.50422194366706,
+              "exponential": 474.19181305463917
+            },
+            "best_bic_model": "exponential",
+            "delta_bic": 4.104802265569333,
+            "bic_strength": "weak"
+          },
+          "best_config": "d200_l20_K50",
+          "best_config_k": 50,
+          "best_noise_frac": null,
+          "best_silhouette": -0.0015351208830736592,
+          "ari_vs_spectral": 0.032414913044731965,
+          "nmi_vs_spectral": 0.31680979517149344,
+          "notes": "Arbitrarily-oriented projected clustering (ORCLUS, Aggarwal/Yu 2000). No noise rejection \u2014 every point is partitioned, sidestepping the 4C/COPAC/ERiC locality bottleneck. Full-sweep envelope: -0.9768."
+        },
+        {
+          "method": "4C",
+          "config": "best: d200_t0.85_mu15",
+          "envelope_slope": null,
+          "delta_vs_paper": null,
+          "n_configs": 48,
+          "powerlaw": {
+            "n_clusters": 10,
+            "alpha": 2.9319560775244664,
+            "xmin": 18.0,
+            "sigma": 0.7887177659006339,
+            "n_tail": 6,
+            "ks_stat": 0.21788538096737198,
+            "bic": {
+              "power_law": 48.22526409569619,
+              "lognormal": 48.71232117819047,
+              "exponential": 45.74785532450133
+            },
+            "best_bic_model": "exponential",
+            "delta_bic": 2.4774087711948596,
+            "bic_strength": "weak"
+          },
+          "best_config": "d200_t0.85_mu15",
+          "best_config_k": 10,
+          "best_noise_frac": 0.9754,
+          "best_silhouette": 0.3280749127310503,
+          "ari_vs_spectral": 0.0008974312438315064,
+          "nmi_vs_spectral": 0.04951173800358655,
+          "notes": "Subspace correlation clustering. Envelope degenerated (26 non-empty configs); too few clusters reach rank\u2265100."
+        },
+        {
+          "method": "COPAC",
+          "config": "best: d200_t0.7_mu10 (env d=200, \u03c4=0.7)",
+          "envelope_slope": -0.630322641695905,
+          "delta_vs_paper": 0.6066773583040951,
+          "n_configs": 48,
+          "powerlaw": {
+            "n_clusters": 10,
+            "alpha": 2.999999999999999,
+            "xmin": 11.0,
+            "sigma": 0.7559289460184541,
+            "n_tail": 7,
+            "ks_stat": 0.11967483785128627,
+            "bic": {
+              "power_law": 43.21555123364212,
+              "lognormal": 44.35240210745337,
+              "exponential": 40.5594704005949
+            },
+            "best_bic_model": "exponential",
+            "delta_bic": 2.65608083304722,
+            "bic_strength": "weak"
+          },
+          "best_config": "d200_t0.7_mu10",
+          "best_config_k": 10,
+          "best_noise_frac": 0.9856,
+          "best_silhouette": 0.12734991167911305,
+          "ari_vs_spectral": 0.00047669910891652925,
+          "nmi_vs_spectral": 0.026798742156949832,
+          "notes": "Subspace correlation clustering (COPAC = 4C + \u03bb_P partitioning, Zimek family). 99% noise at best config."
+        },
+        {
+          "method": "ERiC",
+          "config": "best: d100_t0.7_eq1.0_mu10 (env d=100, \u03c4=0.7, \u03b5q=1.0)",
+          "envelope_slope": -0.5167849047455988,
+          "delta_vs_paper": 0.7202150952544013,
+          "n_configs": 288,
+          "powerlaw": {
+            "n_clusters": 12,
+            "alpha": 2.999999999999999,
+            "xmin": 11.0,
+            "sigma": 0.7071067811865471,
+            "n_tail": 8,
+            "ks_stat": 0.07262578342411063,
+            "bic": {
+              "power_law": 49.2648194536726,
+              "lognormal": 50.93563294940239,
+              "exponential": 46.78792397259392
+            },
+            "best_bic_model": "exponential",
+            "delta_bic": 2.476895481078678,
+            "bic_strength": "weak"
+          },
+          "best_config": "d100_t0.7_eq1.0_mu10",
+          "best_config_k": 12,
+          "best_noise_frac": 0.9828,
+          "best_silhouette": 0.26909670034079985,
+          "ari_vs_spectral": 0.0005876003659982657,
+          "nmi_vs_spectral": 0.03206706800423176,
+          "notes": "Subspace correlation clustering (ERiC = COPAC + affine distance + containment hierarchy, Zimek family). 98% noise at best config. 25 containment pair(s) found.",
+          "n_containments": 25
+        }
+      ]
+    }
+  ],
+  "paper_slope": -1.237
+}

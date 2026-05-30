@@ -1,0 +1,44 @@
+{
+  "model": "pythia-19m",
+  "method": "hierarchical",
+  "k": 400,
+  "total_clusters": 400,
+  "total_tokens": 10000,
+  "category_counts": {
+    "PROPER_NOUNS": 39,
+    "CONTENT": 229,
+    "FORMATTING": 27,
+    "SYNTACTIC": 63,
+    "NUMERIC": 25,
+    "FUNCTION_WORDS": 17
+  },
+  "category_sizes": {
+    "PROPER_NOUNS": 846,
+    "CONTENT": 5599,
+    "FORMATTING": 1014,
+    "SYNTACTIC": 1652,
+    "NUMERIC": 572,
+    "FUNCTION_WORDS": 317
+  },
+  "category_cluster_pct": {
+    "PROPER_NOUNS": 9.75,
+    "CONTENT": 57.25,
+    "FORMATTING": 6.75,
+    "SYNTACTIC": 15.75,
+    "NUMERIC": 6.25,
+    "FUNCTION_WORDS": 4.25
+  },
+  "category_token_pct": {
+    "PROPER_NOUNS": 8.46,
+    "CONTENT": 55.99,
+    "FORMATTING": 10.14,
+    "SYNTACTIC": 16.52,
+    "NUMERIC": 5.72,
+    "FUNCTION_WORDS": 3.17
+  },
+  "content_bearing_pct": 67.0,
+  "repetitive_pct": 0.0,
+  "cross_model_pearson_r_cluster_share": 0.9949,
+  "cross_model_pearson_r_token_share": 0.9994,
+  "cross_model_pearson_r": 0.9994
+}

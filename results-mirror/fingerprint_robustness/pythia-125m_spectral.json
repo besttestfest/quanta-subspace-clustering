@@ -1,0 +1,28 @@
+{
+  "model": "pythia-125m",
+  "paradigm": "Spectral",
+  "fp_subdir": "quanta_fingerprint",
+  "n_docs": 1282,
+  "n_human": 784,
+  "n_ai": 498,
+  "n_clusters": 400,
+  "n_seeds": 5,
+  "n_folds": 5,
+  "full_mcc_mean": 0.8602065758669722,
+  "full_mcc_std": 0.0013658608502893851,
+  "full_mcc_per_seed": [
+    0.8590590345507387,
+    0.8617030272434907,
+    0.8587185141566958,
+    0.8619820747041433,
+    0.8595702286797918
+  ],
+  "surface_mcc_mean": 0.6213407679624667,
+  "surface_mcc_std": 0.003906625300212228,
+  "delta": 0.2388658079045055,
+  "max_1q_mcc": 0.3591831771763413,
+  "max_1q_cluster": 14,
+  "permutation_mcc": -0.0035676616825830406,
+  "flag": "distributed",
+  "mega_cluster": null
+}

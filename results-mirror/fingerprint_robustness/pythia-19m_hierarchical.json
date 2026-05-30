@@ -1,0 +1,28 @@
+{
+  "model": "pythia-19m",
+  "paradigm": "Hierarchical",
+  "fp_subdir": "quanta_fingerprint_hierarchical",
+  "n_docs": 1281,
+  "n_human": 784,
+  "n_ai": 497,
+  "n_clusters": 400,
+  "n_seeds": 5,
+  "n_folds": 5,
+  "full_mcc_mean": 0.6749238865845475,
+  "full_mcc_std": 0.005826925052044168,
+  "full_mcc_per_seed": [
+    0.6744580773176869,
+    0.6816747997795165,
+    0.6710387168325181,
+    0.6810039979488586,
+    0.6664438410441573
+  ],
+  "surface_mcc_mean": 0.6073519668765314,
+  "surface_mcc_std": 0.002349002736260263,
+  "delta": 0.06757191970801613,
+  "max_1q_mcc": 0.5102094888237821,
+  "max_1q_cluster": 61,
+  "permutation_mcc": 0.03145509608211377,
+  "flag": "distributed",
+  "mega_cluster": null
+}
