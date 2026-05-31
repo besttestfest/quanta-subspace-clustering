@@ -1,4 +1,4 @@
-# Subspace Clustering for Quanta Discovery from Gradients
+# Scaling Gradient Clustering for Discovery of Fundamental Skills in Language Models
 
 Master's thesis by Martin Nørmark Hansen (SDU IMADA, 2026).
 Supervised by Lukas Galke Poech.
