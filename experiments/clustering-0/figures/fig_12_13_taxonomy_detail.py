@@ -1,10 +1,9 @@
-"""Publication figures: Taxonomy detail and bootstrap CIs (fig_12_13_taxonomy_detail.py).
+"""Publication figure: Taxonomy detail (fig_12_13_taxonomy_detail.py).
 
-Generates two figures used in the thesis appendix:
+Generates the taxonomy appendix figure:
   fig_12_taxonomy_and_recovery      - token category distribution + paper quanta recovery
-  fig_13_taxonomy_bootstrap_ci      - bootstrap 95% CIs for top-6 token categories
 
-Figures are written to {REPO_DIR}/figures/contribution-3/appendix/.
+The figure is written to {REPO_DIR}/figures/contribution-3/appendix/.
 
 Prerequisites (run first):
   pipeline/09_quanta_taxonomy.py  for BOTH models
@@ -24,8 +23,6 @@ import numpy as np
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from matplotlib.lines import Line2D
-from scipy import stats
 
 warnings.filterwarnings("ignore")
 
@@ -121,9 +118,9 @@ for model_name, rdir in [("Pythia-19m", RESULTS_19M), ("Pythia-125m", RESULTS_12
     print(f"  {model_name}: loaded "
           f"({len(taxonomy[model_name]['cluster_analysis'])} clusters)")
 
-# Figure 12 - Quanta taxonomy & paper quanta recovery (appendix)
+# Quanta taxonomy & paper quanta recovery (appendix figure)
 
-print("\nGenerating Figure 12: Quanta Taxonomy and Recovery")
+print("\nGenerating taxonomy figure: Quanta Taxonomy and Recovery")
 fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 
 ax = axes[0]
@@ -181,81 +178,7 @@ savefig_both(fig12_path)
 plt.close()
 print(f"  Saved: {fig12_path}")
 
-
-# Figure 13 - Bootstrap 95% CI for category percentages
-#
-# Note: panel (a) "Spectral cluster size distribution" was removed - it duplicated
-# fig_01_rank_frequency. This is now a single-panel figure showing the
-# uncertainty around fig_12's category percentages
-
-print("Generating Figure 13: Bootstrap 95% CI for category proportions")
-fig, ax = plt.subplots(1, 1, figsize=(8, 6))
-
-n_boot = 5000
-rng = np.random.RandomState(42)
-top_cats_raw = sorted(
-    normalize_categories(taxonomy["Pythia-19m"]["category_sizes"]).items(),
-    key=lambda x: -x[1]
-)[:6]
-top_cats = [c for c, _ in top_cats_raw]
-for model_name, color in [("Pythia-19m", MODEL_COLORS["Pythia-19m"]),
-                          ("Pythia-125m", MODEL_COLORS["Pythia-125m"])]:
-    d = taxonomy[model_name]
-    cluster_info = d["cluster_analysis"]
-    cluster_cats, cluster_sizes = [], []
-    for cid, info in cluster_info.items():
-        raw_cat = info.get("category", "UNKNOWN")
-        cat = normalize_category(raw_cat)
-        cluster_cats.append(cat)
-        cluster_sizes.append(info.get("size", 0))
-    cluster_cats = np.array(cluster_cats)
-    cluster_sizes = np.array(cluster_sizes, dtype=float)
-    boot_pcts = {c: [] for c in top_cats}
-    for _ in range(n_boot):
-        idxs = rng.choice(len(cluster_cats), size=len(cluster_cats), replace=True)
-        b_cats = cluster_cats[idxs]
-        b_sizes = cluster_sizes[idxs]
-        b_total = b_sizes.sum()
-        for cat in top_cats:
-            mask = b_cats == cat
-            pct = 100 * b_sizes[mask].sum() / b_total if b_total > 0 else 0
-            boot_pcts[cat].append(pct)
-    offset = 0.15 if model_name == "Pythia-19m" else -0.15
-    for i, cat in enumerate(top_cats):
-        vals = np.array(boot_pcts[cat])
-        ci_low, ci_high = np.percentile(vals, [2.5, 97.5])
-        mean_val = vals.mean()
-        ax.errorbar(mean_val, i + offset,
-                    xerr=[[mean_val - ci_low], [ci_high - mean_val]],
-                    fmt="o", color=color, capsize=4, markersize=6, capthick=1.5)
-ax.set_yticks(np.arange(len(top_cats)))
-ax.set_yticklabels(top_cats)
-ax.set_xlabel("Percentage of Tokens (%)")
-ax.invert_yaxis()
-legend_elements = [
-    Line2D([0], [0], marker="o", color=MODEL_COLORS["Pythia-19m"],
-           label="Pythia-19m", markersize=6, linestyle="None"),
-    Line2D([0], [0], marker="o", color=MODEL_COLORS["Pythia-125m"],
-           label="Pythia-125m", markersize=6, linestyle="None"),
-]
-ax.legend(handles=legend_elements, fontsize=9)
-sizes_19_norm = normalize_categories(taxonomy["Pythia-19m"]["category_sizes"])
-sizes_125_norm = normalize_categories(taxonomy["Pythia-125m"]["category_sizes"])
-pcts_a = [100 * sizes_19_norm.get(c, 0) / total_19 for c in top_cats]
-pcts_b = [100 * sizes_125_norm.get(c, 0) / total_125 for c in top_cats]
-r, p = stats.pearsonr(pcts_a, pcts_b)
-ax.set_title(f"Bootstrap 95% CI for top-6 categories\n"
-             f"($n = {n_boot}$ resamples, cross-model $r = {r:.3f}$)")
-
-plt.tight_layout()
-fig13_path = os.path.join(OUTPUT_DIR_APP, "fig_13_taxonomy_bootstrap_ci.png")
-savefig_both(fig13_path)
-plt.close()
-print(f"  Saved: {fig13_path}")
-
 print(f"\nPaper quanta recovery:")
 print(f"  Pythia-19m:  numerical={counts_19m[0]}, newline={counts_19m[1]}, code={counts_19m[2]}")
 print(f"  Pythia-125m: numerical={counts_125m[0]}, newline={counts_125m[1]}, code={counts_125m[2]}")
-print(f"\nCross-model taxonomy correlation (k=400):")
-print(f"  r = {r:.3f}, p = {p:.2e}")
-print(f"\nFigures saved to: {OUTPUT_DIR_APP}")
+print(f"\nFigure saved to: {OUTPUT_DIR_APP}")

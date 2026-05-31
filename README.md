@@ -43,7 +43,7 @@ Total runtime is roughly 6-8 days on a single V100 (most of it is the similarity
 setup/                         Data preparation scripts
 experiments/clustering-0/
   pipeline/                    Core pipeline (01-10), run in order
-  figures/                     Figure-generation scripts (fig_01-fig_13)
+  figures/                     Figure-generation scripts (fig_01-fig_12)
   run_full_pipeline.sh         Runs pipeline/ steps end-to-end for one model
   run_cross_model.sh           Cross-model alignment + stability figures (run after both models)
   config.py                    Paths and model configuration
@@ -71,12 +71,12 @@ run_all.sh                     Master script: full end-to-end reproduction
 
 | Script | Figures produced |
 |---|---|
-| `fig_01_02_overview.py` | Fig 1-2: Rank-frequency distribution and cross-model structure |
-| `fig_03_fingerprint.py` | Fig 3: Fingerprint analysis (divergence, similarity, logistic regression, active quanta) |
-| `fig_04_taxonomy.py` | Fig 4: Quanta taxonomy and category analysis |
-| `fig_05_10_methods.py` | Fig 5-10: Methods comparison and envelope fits |
-| `fig_11_stability.py` | Fig 11: Bootstrap stability across methods |
-| `fig_12_13_taxonomy_detail.py` | Fig 12-13: Taxonomy detail and bootstrap CIs |
+| `fig_01_02_overview.py` | Rank-frequency distribution and cross-model structure |
+| `fig_03_fingerprint.py` | Fingerprint analysis (divergence, similarity, logistic regression, active quanta) |
+| `fig_04_taxonomy.py` | Quanta taxonomy and category analysis |
+| `fig_05_10_methods.py` | Method comparison and envelope fits (overlays, hyperparameter heatmaps, per-method fits) |
+| `fig_11_stability.py` | Bootstrap stability (NMI/ARI across iterations) |
+| `fig_12_13_taxonomy_detail.py` | Taxonomy detail (category distribution and paper-quanta recovery) |
 
 ## Key results
 
