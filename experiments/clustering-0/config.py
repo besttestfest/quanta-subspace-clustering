@@ -25,7 +25,13 @@ else:
 if os.environ.get("QDG_BASE_DIR"):
     BASE_DIR = os.environ["QDG_BASE_DIR"]
 
-REPO_DIR = f"{BASE_DIR}/quantization-model"
+# Repository root. Defaults to <BASE_DIR>/quantization-model for existing
+# setups; falls back to the checkout containing this file (so the pipeline
+# works regardless of the clone's directory name). Override with QDG_REPO_DIR.
+_CHECKOUT_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+REPO_DIR = os.environ.get("QDG_REPO_DIR", f"{BASE_DIR}/quantization-model")
+if not os.path.isdir(REPO_DIR):
+    REPO_DIR = _CHECKOUT_DIR
 PILE_CANONICAL = f"{BASE_DIR}/data/the_pile_test_canonical_200k"
 PYTHIA_CACHE = f"{BASE_DIR}/models"
 

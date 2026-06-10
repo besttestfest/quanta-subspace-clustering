@@ -373,6 +373,7 @@ joblib       1.3.0
 5. **SpectralClustering seed**: `random_state=42`; cluster labels differ between runs but envelope slopes reproduce within ±0.005.
 6. **Envelope values in Table 1**: The thesis reports apples-to-apples envelope slopes from an extended (d,α) grid search run separately on UCloud. The values from `run_full_pipeline.sh` (step 3) will be close but may differ slightly as the pipeline uses a reduced grid. The exact thesis values (e.g. SSC-Lasso |Δ|=0.008 on Pythia-19M) required the full L-grid sweep.
 7. **Fingerprint MCC variability**: AI text is generated at temperature=1.0 and saved to `shared_ai_docs.pkl` so all methods use identical documents. Results are reproducible across runs of the same pipeline, but will differ from the thesis values (which used a separately generated AI corpus). Expect MCC within ±0.05-0.10 of thesis Table 2 values.
+8. **Baseline evaluation**: `pipeline/08_bow_baseline.py` classifies the document selection recorded by `pipeline/05_fingerprint.py` (`classification_docs.json`) and fits TF-IDF inside each training fold; `pipeline/04_taxonomy_categories.py` reports cross-validated L1 selection scores. Fresh runs of these scripts therefore give slightly more conservative numbers than the archived `results-mirror/` values, which were produced with an earlier evaluation protocol.
 
 ---
 

@@ -98,10 +98,22 @@ for ax, metric, ylabel, panel_label in [
     ax.set_axisbelow(True)
     ax.set_xlim(0.4, len(MODELS) + 0.6)
 
-# Footnote
+# Footnote - configs are read from the data files so the caption always
+# matches what was actually run.
+def _cfg_str(boot):
+    cfg = (boot or {}).get("config", {})
+    if cfg:
+        return f"d={cfg.get('d')}, α={cfg.get('alpha')}, k={cfg.get('k', 400)}"
+    return "k=400"
+
+cfg_19m, cfg_125m = _cfg_str(boot_19m), _cfg_str(boot_125m)
+if cfg_19m == cfg_125m:
+    cfg_line = f"SSC-Lasso ({cfg_19m})"
+else:
+    cfg_line = f"SSC-Lasso (19M: {cfg_19m}; 125M: {cfg_125m})"
+
 fig.text(0.5, -0.04,
-         r"$\it{SSC\!-\!Lasso}\ (d=500,\ \alpha=0.0001,\ k=400)$"
-         ", 80% token subsample per iteration.\n"
+         f"{cfg_line}, 80% token subsample per iteration.\n"
          "Each dot is one bootstrap run; crosshair = mean ± 1 std.",
          ha="center", va="top", fontsize=8, color="#444")
 

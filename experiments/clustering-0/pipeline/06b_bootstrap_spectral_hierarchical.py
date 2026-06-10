@@ -53,8 +53,7 @@ SEED_BASE     = args.seed
 SPECTRAL_NINIT = args.spectral_ninit
 
 OUT_LOCAL  = os.path.join(PATHS["results_dir"], f"bootstrap_stability_{METHOD}.json")
-MIRROR_DIR = os.path.join(os.path.dirname(os.path.dirname(PATHS["results_dir"])),
-                          "quantization-model", "results-mirror", "bootstrap_stability")
+MIRROR_DIR = os.path.join(PATHS["repo_dir"], "results-mirror", "bootstrap_stability")
 os.makedirs(MIRROR_DIR, exist_ok=True)
 OUT_MIRROR = os.path.join(MIRROR_DIR, f"{MODEL_NAME}_{METHOD}.json")
 
@@ -103,6 +102,10 @@ if os.path.exists(OUT_LOCAL):
 summary = None  # guard for N_ITER=0 or pre-completed run
 n_sub = int(n_tokens * SUBSAMPLE)
 rng = np.random.default_rng(SEED_BASE)
+# Advance the RNG past already-completed iterations so a resumed run draws
+# the same subsample sequence as an uninterrupted one.
+for _ in range(start_iter):
+    rng.choice(n_tokens, size=n_sub, replace=False)
 
 for it in tqdm(range(start_iter, N_ITER), desc=f"Bootstrap {METHOD}"):
     t0 = time.time()

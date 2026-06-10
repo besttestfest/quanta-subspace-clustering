@@ -120,4 +120,3 @@ All figures committed to git under `figures/`:
 | Fig 10 | `contribution-2/appendix/fig_10_ssc_evaluation_125m.pdf` |
 | Fig 11 | `contribution-2/appendix/fig_11_bootstrap_stability.pdf` |
 | Fig 12 | `contribution-3/appendix/fig_12_taxonomy_and_recovery.pdf` |
-| Fig 13 | `contribution-3/appendix/fig_13_taxonomy_bootstrap_ci.pdf` |

@@ -18,6 +18,7 @@ from collections import defaultdict
 import numpy as np
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import balanced_accuracy_score, matthews_corrcoef
+from sklearn.model_selection import StratifiedKFold, cross_val_predict
 
 from config import PATHS
 
@@ -215,12 +216,14 @@ if not args.skip_selection:
                     max_iter=1000,
                     random_state=42
                 )
-                lr.fit(X, y)
-
-                y_pred = lr.predict(X)
+                # Held-out performance via stratified 5-fold CV
+                cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+                y_pred = cross_val_predict(lr, X, y, cv=cv)
                 bal_acc = balanced_accuracy_score(y, y_pred)
                 mcc = matthews_corrcoef(y, y_pred)
 
+                # Feature count from a fit on the full data (the selection itself)
+                lr.fit(X, y)
                 n_selected = np.sum(np.abs(lr.coef_[0]) > 1e-6)
 
                 selection_results[f"C_{C_val}"] = {
@@ -228,8 +231,9 @@ if not args.skip_selection:
                     "mcc": float(mcc),
                     "n_selected": int(n_selected),
                     "n_features": int(X.shape[1]),
+                    "evaluation": "5-fold stratified CV",
                 }
-                print(f"  C={C_val:6.3f}: bal_acc={bal_acc:.3f}, MCC={mcc:.3f}, "
+                print(f"  C={C_val:6.3f}: CV bal_acc={bal_acc:.3f}, CV MCC={mcc:.3f}, "
                       f"selected={n_selected}/{X.shape[1]}")
 
             except Exception as e:

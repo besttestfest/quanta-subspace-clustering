@@ -95,6 +95,7 @@ LOSS_THRESHOLD = 0.1       # Zero-loss threshold (same as paper)
 N_AI_TOKENS = int(os.environ.get("N_AI_TOKENS", 6000)) # 6000 matches the thesis run; N_AI_TOKENS=2000 for the older run
 BATCH_GRAD = 50            # Gradient computation batch size
 MIN_TOKENS_PER_DOC = 3     # Min tokens per doc for classification
+PROMPT_LEN = 10            # Human prompt tokens at the start of each AI doc
 
 # Best (d, alpha) for SSC-Lasso per model - winners of the apples-to-apples
 # envelope sweep produced by pipeline/03_envelope_analysis.py
@@ -330,10 +331,13 @@ def run_fingerprint_analysis(method_name):
 
         print(f"  Generating {N_AI_DOCS} AI documents (temp={TEMPERATURE})...")
         np.random.seed(42)  # Fix seed for reproducible prompt selection
+        torch.manual_seed(42)  # Fix seed for reproducible sampling
+        if torch.cuda.is_available():
+            torch.cuda.manual_seed_all(42)
         ai_docs = []
         for doc_i in tqdm(range(N_AI_DOCS), desc="Generating"):
             prompt_doc = dataset[np.random.randint(0, len(dataset))]
-            prompt_ids = prompt_doc["input_ids"][0][:10]
+            prompt_ids = prompt_doc["input_ids"][0][:PROMPT_LEN]
             input_ids = torch.tensor([prompt_ids], device=device)
 
             with torch.no_grad():
@@ -369,7 +373,8 @@ def run_fingerprint_analysis(method_name):
             outputs = model(input_ids)
             logits = outputs.logits[0]
 
-        for t in range(len(doc_ids) - 1):
+        # Only consider generated tokens (skip targets inside the human prompt)
+        for t in range(PROMPT_LEN - 1, len(doc_ids) - 1):
             log_probs = torch.log_softmax(logits[t], dim=-1)
             target = doc_ids[t + 1]
             loss = -log_probs[target].item()
@@ -584,11 +589,12 @@ def run_fingerprint_analysis(method_name):
         ai_total_counts[assignment['cluster']] += 1
 
     active_mask = (human_total_counts > 0) | (ai_total_counts > 0)
-    if active_mask.sum() > 0:
-        h_norm = human_total_counts[active_mask] / human_total_counts.sum() * 1000
-        a_norm = ai_total_counts[active_mask] / ai_total_counts.sum() * 1000
-        chi2, p_value = stats.chisquare(a_norm + 1, f_exp=h_norm + 1)
-        print(f"\n  B) Chi-squared test (normalized counts):")
+    chi2 = p_value = None
+    if active_mask.sum() > 1:
+        contingency = np.vstack([human_total_counts[active_mask],
+                                 ai_total_counts[active_mask]])
+        chi2, p_value, chi2_dof, _ = stats.chi2_contingency(contingency)
+        print(f"\n  B) Chi-squared test of homogeneity (raw counts, dof={chi2_dof}):")
         print(f"     chi2 = {chi2:.2f}, p = {p_value:.6f}")
         print(f"     {'SIGNIFICANT' if p_value < 0.05 else 'NOT significant'} at p<0.05")
 
@@ -599,10 +605,24 @@ def run_fingerprint_analysis(method_name):
     # D) Per-document classification
     print(f"\n  D) Per-document classification via fingerprint:")
 
-    human_fps_filtered = [fp for doc, fp in human_fingerprints.items()
-                           if len(doc_to_tokens[doc]) >= MIN_TOKENS_PER_DOC]
-    ai_fps_filtered = [fp for doc, fp in ai_fingerprints.items()
-                        if len(ai_doc_tokens[doc]) >= MIN_TOKENS_PER_DOC]
+    human_docs_kept = [doc for doc in human_fingerprints
+                       if len(doc_to_tokens[doc]) >= MIN_TOKENS_PER_DOC]
+    ai_docs_kept = [doc for doc in ai_fingerprints
+                    if len(ai_doc_tokens[doc]) >= MIN_TOKENS_PER_DOC]
+    human_fps_filtered = [human_fingerprints[doc] for doc in human_docs_kept]
+    ai_fps_filtered = [ai_fingerprints[doc] for doc in ai_docs_kept]
+
+    # Record the exact document selection so downstream baselines
+    # (pipeline/08_bow_baseline.py) classify the identical corpus.
+    doc_sel_path = os.path.join(RESULTS_DIR, "classification_docs.json")
+    with open(doc_sel_path, "w") as f:
+        json.dump({
+            "model": MODEL_NAME,
+            "min_tokens_per_doc": MIN_TOKENS_PER_DOC,
+            "human_doc_idxs": [int(d) for d in human_docs_kept],
+            "ai_doc_idxs": [int(d) for d in ai_docs_kept],
+        }, f, indent=2)
+    print(f"     Saved document selection: {doc_sel_path}")
 
     scores = None
     mcc_scores = None
@@ -768,8 +788,8 @@ def run_fingerprint_analysis(method_name):
             'kl_ai_human': float(kl_ai_human),
             'js_divergence': float(js_divergence),
             'cosine_similarity': float(cos_sim),
-            'chi2': float(chi2) if active_mask.sum() > 0 else None,
-            'chi2_p_value': float(p_value) if active_mask.sum() > 0 else None,
+            'chi2': float(chi2) if chi2 is not None else None,
+            'chi2_p_value': float(p_value) if p_value is not None else None,
             'logreg_accuracy': float(scores.mean()) if scores is not None else None,
             'logreg_std': float(scores.std()) if scores is not None else None,
             'logreg_metric': 'balanced_accuracy',
@@ -793,7 +813,8 @@ def run_fingerprint_analysis(method_name):
             pickle.dump({
                 "texts": [d.tolist() for d in ai_docs],
                 "n_ai_docs_generated": N_AI_DOCS,
-                "n_ai_docs_with_tokens": len(ai_zero_loss_tokens),
+                "n_ai_docs_with_tokens": n_ai_docs_with_tokens,
+                "n_ai_zero_loss_tokens": len(ai_zero_loss_tokens),
                 "temperature": TEMPERATURE,
                 "max_doc_len": MAX_DOC_LEN,
                 "random_seed": 42,

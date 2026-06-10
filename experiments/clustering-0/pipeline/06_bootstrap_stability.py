@@ -323,12 +323,17 @@ if completed:
 
     # Also write the tracked results-mirror copy so figures/fig_11_stability.py
     # can read it directly (matches the pipeline/06b output convention).
-    mirror_dir = os.path.join(PATHS["repo_dir"], "results-mirror", "bootstrap_stability")
-    os.makedirs(mirror_dir, exist_ok=True)
-    mirror_path = os.path.join(mirror_dir, f"{MODEL_NAME}_ssc_lasso.json")
-    with open(mirror_path, "w") as f:
-        json.dump(results, f, indent=2)
-    print(f"  Mirror: {mirror_path}")
+    # Skipped when BOOT_D/BOOT_ALPHA override the canonical config, so test
+    # runs never overwrite the canonical mirror file.
+    if "BOOT_D" in os.environ or "BOOT_ALPHA" in os.environ:
+        print("  Non-canonical config (BOOT_D/BOOT_ALPHA set) - mirror write skipped.")
+    else:
+        mirror_dir = os.path.join(PATHS["repo_dir"], "results-mirror", "bootstrap_stability")
+        os.makedirs(mirror_dir, exist_ok=True)
+        mirror_path = os.path.join(mirror_dir, f"{MODEL_NAME}_ssc_lasso.json")
+        with open(mirror_path, "w") as f:
+            json.dump(results, f, indent=2)
+        print(f"  Mirror: {mirror_path}")
 
     print(f"\nSummary - {len(completed)} completed iterations")
     print(f"  ARI : {summary['ari_mean']:.4f} ± {summary['ari_std']:.4f}  "
