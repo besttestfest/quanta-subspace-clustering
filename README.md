@@ -1,4 +1,4 @@
-# Revisiting Quanta Discovery from Gradients with Subspace Clustering
+# Subspace Clustering and the Representational Utility of Quanta Fingerprints
 
 Anonymous code release for peer review.
 
