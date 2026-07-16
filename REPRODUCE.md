@@ -1,6 +1,6 @@
 # How to Reproduce: QDG Pipeline with SSC-Lasso Clustering
 
-This guide reproduces the full thesis experiment from scratch. The pipeline implements:
+This guide reproduces the full paper experiment from scratch. The pipeline implements:
 
 1. The original Michaud et al. (2023) QDG replication on Pythia-19M and Pythia-125M,
 2. A systematic clustering comparison (Spectral, SSC-Lasso, SSC-OMP, Hierarchical),
@@ -23,7 +23,7 @@ All other steps are CPU-only and can run on a laptop.
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/besttestfest/quanta-subspace-clustering.git
+# clone this repository, then:
 cd quanta-subspace-clustering
 ```
 
@@ -130,7 +130,7 @@ python -u pipeline/03_envelope_analysis.py
 ```
 
 Computes apples-to-apples envelope slopes for all methods using the
-per-method k-sweep described in Appendix D of the thesis.
+per-method k-sweep described in Appendix D of the paper.
 
 ### Step 4: Quanta fingerprint (~30-60 min per method, GPU)
 
@@ -141,8 +141,8 @@ python -u pipeline/05_fingerprint.py --cluster-method hierarchical
 ```
 
 Runs the AI-vs-human logistic regression classifier on the three paradigms
-used in the thesis tables (Spectral, SSC-Lasso, Hierarchical). SSC-OMP is
-excluded as it does not appear in any thesis result table, saving ~22 h.
+used in the paper tables (Spectral, SSC-Lasso, Hierarchical). SSC-OMP is
+excluded as it does not appear in any paper result table, saving ~22 h.
 AI documents are generated once by the first invocation and shared across
 all subsequent methods (`shared_ai_docs.pkl`).
 
@@ -371,8 +371,8 @@ joblib       1.3.0
 3. **Block length**: `block_len=250` (same as original paper). Larger models (e.g. Pythia-125M) have much larger per-token gradients and may run out of GPU memory in step 01; lower the block size with `export QDG_BLOCK_LEN=25` (no code edit needed).
 4. **sklearn ≥1.8**: L1 C-grid auto-tuned for newer liblinear tolerance defaults.
 5. **SpectralClustering seed**: `random_state=42`; cluster labels differ between runs but envelope slopes reproduce within ±0.005.
-6. **Envelope values in Table 1**: The thesis reports apples-to-apples envelope slopes from an extended (d,α) grid search run separately on UCloud. The values from `run_full_pipeline.sh` (step 3) will be close but may differ slightly as the pipeline uses a reduced grid. The exact thesis values (e.g. SSC-Lasso |Δ|=0.008 on Pythia-19M) required the full L-grid sweep.
-7. **Fingerprint MCC variability**: AI text is generated at temperature=1.0 and saved to `shared_ai_docs.pkl` so all methods use identical documents. Results are reproducible across runs of the same pipeline, but will differ from the thesis values (which used a separately generated AI corpus). Expect MCC within ±0.05-0.10 of thesis Table 2 values.
+6. **Envelope values in Table 1**: The paper reports apples-to-apples envelope slopes from an extended (d,α) grid search run separately on an HPC cluster. The values from `run_full_pipeline.sh` (step 3) will be close but may differ slightly as the pipeline uses a reduced grid. The exact paper values (e.g. SSC-Lasso |Δ|=0.008 on Pythia-19M) required the full L-grid sweep.
+7. **Fingerprint MCC variability**: AI text is generated at temperature=1.0 and saved to `shared_ai_docs.pkl` so all methods use identical documents. Results are reproducible across runs of the same pipeline, but will differ from the paper values (which used a separately generated AI corpus). Expect MCC within ±0.05-0.10 of paper Table 2 values.
 8. **Baseline evaluation**: `pipeline/08_bow_baseline.py` classifies the document selection recorded by `pipeline/05_fingerprint.py` (`classification_docs.json`) and fits TF-IDF inside each training fold; `pipeline/04_taxonomy_categories.py` reports cross-validated L1 selection scores. Fresh runs of these scripts therefore give slightly more conservative numbers than the archived `results-mirror/` values, which were produced with an earlier evaluation protocol.
 
 ---

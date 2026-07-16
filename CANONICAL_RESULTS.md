@@ -1,6 +1,6 @@
 # Canonical Results Reference
 
-Numerical results reported in the thesis, with source file references.
+Numerical results reported in the paper, with source file references.
 
 ---
 
@@ -61,7 +61,7 @@ Source: `results-mirror/bootstrap_stability/` (n=50 iterations per method/model)
 | Spectral | Pythia-19M  | 0.687±0.005 | 0.688 | 0.134±0.009 | 0.132 |
 | Spectral | Pythia-125M | 0.670±0.006 | 0.670 | 0.124±0.007 | 0.125 |
 
-ARI ranges cited in thesis:
+ARI ranges cited in paper:
 - Hierarchical: 0.36-0.44
 - SSC-Lasso: 0.33-0.38
 - Spectral: 0.12-0.13

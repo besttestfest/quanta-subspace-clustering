@@ -3,7 +3,7 @@
 #
 # Versions are pinned to the tested configuration (see REPRODUCE.md,
 # "Software Versions"). torch is left unpinned so pip picks the right wheel
-# for the host (CPU-only or one of several CUDA builds). On UCloud GPU images
+# for the host (CPU-only or one of several CUDA builds). On typical GPU cluster images
 # pip's wheel-resolver will select a CUDA-enabled build automatically.
 # If you need a specific CUDA build, install torch separately first:
 #   pip install torch==2.2.0+cu121 --extra-index-url https://download.pytorch.org/whl/cu121

@@ -8,7 +8,7 @@ a quantum *is*, not just how well the envelope fits.
 Output:
     figures/contribution-3/fig_04_taxonomy_comparison.pdf/.png
 
-Usage (UCloud):
+Usage:
     cd experiments/clustering-0
     python figures/fig_04_taxonomy.py
 """

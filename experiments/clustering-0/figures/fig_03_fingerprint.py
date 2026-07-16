@@ -1,14 +1,21 @@
 """Publication figures: Quanta fingerprint analysis (fig_03_fingerprint.py).
 
-Generates one figure used in the thesis main body:
+Generates one figure used in the paper main body:
   fig_03_fingerprint - KL/JS divergence, cosine/Pearson similarity,
-                       logistic regression balanced accuracy, and active
+                       logistic regression MCC, and active
                        quanta count (Human vs AI, Pythia-19M and Pythia-125M)
+
+Panel (c) reports the 5-seed x 5-fold mean MCC produced by
+pipeline/07_fingerprint_robustness.py, which is the same number reported in
+the paper's Table 2. Balanced accuracy is deliberately not shown: it was a
+single-seed value from 05_fingerprint.py and therefore disagreed with the
+5-seed MCC in the table.
 
 Figure is written to {REPO_DIR}/figures/contribution-3/.
 
 Prerequisites (run first):
-  pipeline/05_fingerprint.py  for BOTH models (SSC-Lasso paradigm)
+  pipeline/05_fingerprint.py             for BOTH models (SSC-Lasso paradigm)
+  pipeline/07_fingerprint_robustness.py  for BOTH models (SSC-Lasso paradigm)
 
 Run once per model (set QDG_MODEL env var):
   cd experiments/clustering-0
@@ -41,7 +48,7 @@ apply_style()
 
 
 # Prefer the SSC-Lasso fingerprint results (the recommended paradigm in this
-# thesis) over the spectral baseline. Fall back to spectral if SSC-Lasso is
+# paper) over the spectral baseline. Fall back to spectral if SSC-Lasso is
 # unavailable so the script remains runnable in either configuration
 FP_SUBDIR_PREFERENCE = [
     "quanta_fingerprint_ssc-lasso",   # 600/6000 sample run
@@ -95,6 +102,35 @@ PARADIGM_LABEL = {
     "quanta_fingerprint_ssc_lasso": "SSC-Lasso",
     "quanta_fingerprint":           "Spectral",
 }.get(fp_paradigm, fp_paradigm)
+
+
+# Panel (c) uses the 5-seed x 5-fold mean MCC from the robustness run rather
+# than the single-seed metrics in 05_fingerprint.py's results.json. This is the
+# same source as Table 2 in the paper, so figure and table cannot disagree.
+ROBUST_DIR = os.path.join(REPO_DIR, "results-mirror", "fingerprint_robustness")
+
+
+def _load_robust_mcc(model_name, paradigm_label):
+    """Return (mean_mcc, std_across_seeds) from 07_fingerprint_robustness.py."""
+    slug = paradigm_label.replace("-", "_").lower()   # SSC-Lasso -> ssc_lasso
+    path = os.path.join(ROBUST_DIR, f"{model_name.lower()}_{slug}.json")
+    if not os.path.exists(path):
+        return None
+    with open(path, "r") as f:
+        d = json.load(f)
+    return float(d["full_mcc_mean"]), float(d["full_mcc_std"])
+
+
+print("\nLoading 5-seed robustness MCC (same source as Table 2)...")
+robust_mcc = {}
+for model_name in ["Pythia-19m", "Pythia-125m"]:
+    r = _load_robust_mcc(model_name, PARADIGM_LABEL)
+    if r is None:
+        print(f"  MISSING: no robustness MCC for {model_name} ({PARADIGM_LABEL}).\n"
+              f"  Run pipeline/07_fingerprint_robustness.py for both models first.")
+        sys.exit(1)
+    robust_mcc[model_name] = r
+    print(f"  {model_name}: MCC = {r[0]:+.4f} +/- {r[1]:.4f}  (5 seeds x 5 folds)")
 
 
 # Figure 3: Quanta Fingerprint Analysis (2x2 grid)

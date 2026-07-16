@@ -88,11 +88,11 @@ from sklearn.metrics import (
 from config import PATHS, MODEL_NAME
 
 K = 400                    # Number of clusters (same as taxonomy analysis)
-N_AI_DOCS = int(os.environ.get("N_AI_DOCS", 600))      # 600 matches the thesis run; N_AI_DOCS=200 for the older run
+N_AI_DOCS = int(os.environ.get("N_AI_DOCS", 600))      # 600 matches the paper run; N_AI_DOCS=200 for the older run
 MAX_DOC_LEN = 256          # Max tokens per generated doc
 TEMPERATURE = 1.0          # Sampling temperature
 LOSS_THRESHOLD = 0.1       # Zero-loss threshold (same as paper)
-N_AI_TOKENS = int(os.environ.get("N_AI_TOKENS", 6000)) # 6000 matches the thesis run; N_AI_TOKENS=2000 for the older run
+N_AI_TOKENS = int(os.environ.get("N_AI_TOKENS", 6000)) # 6000 matches the paper run; N_AI_TOKENS=2000 for the older run
 BATCH_GRAD = 50            # Gradient computation batch size
 MIN_TOKENS_PER_DOC = 3     # Min tokens per doc for classification
 PROMPT_LEN = 10            # Human prompt tokens at the start of each AI doc
@@ -117,15 +117,15 @@ parser.add_argument("--cluster-method", default="spectral",
                     choices=["spectral", "ssc-lasso", "ssc-omp", "hierarchical"],
                     help="Clustering method to use")
 parser.add_argument("--all-methods", action="store_true",
-                    help="Generate for all 3 thesis methods sequentially (spectral, ssc-lasso, hierarchical)")
+                    help="Generate for all 3 paper methods sequentially (spectral, ssc-lasso, hierarchical)")
 parser.add_argument("--load-cached", action="store_true",
                     help="Skip generation, load existing fingerprint_matrix.npz")
 parser.add_argument("--skip-fingerprint", action="store_true",
                     help="Skip entire fingerprint pipeline (no output produced)")
 args = parser.parse_args()
 
-# If --all-methods, run sequentially for the 3 thesis methods.
-# SSC-OMP is excluded: it does not appear in any thesis result table (saves ~22 h).
+# If --all-methods, run sequentially for the 3 paper methods.
+# SSC-OMP is excluded: it does not appear in any paper result table (saves ~22 h).
 # Use --cluster-method ssc-omp explicitly if you need it.
 if args.all_methods:
     methods_to_run = ["spectral", "ssc-lasso", "hierarchical"]

@@ -1,6 +1,6 @@
 """Publication figures: Bootstrap stability.
 
-Generates one figure used in the thesis appendix:
+Generates one figure used in the paper appendix:
   fig_11_bootstrap_stability  - NMI/ARI distributions across 50 bootstrap
                              iterations for both Pythia-19M and 125M
 

@@ -6,7 +6,7 @@ filters out tokens predictable by trigram induction, and samples
 every 50th remaining token.
 
 Adapted from original/scripts/zero_and_induction_idxs.py (Michaud et al.)
-with paths updated for UCloud.
+with paths updated for this project.
 
 Input:  losses_pythia-2.npy (from compute_losses.py)
         the_pile_test_canonical_200k/ (from download_pile.py)

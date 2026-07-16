@@ -53,7 +53,7 @@ python -u pipeline/03_envelope_analysis.py
 
 echo ""
 echo "Step 4/9: Quanta fingerprint (AI detection, GPU) - $(date)"
-# Run the 3 methods used in thesis tables (Spectral, SSC-Lasso, Hierarchical).
+# Run the 3 methods used in paper tables (Spectral, SSC-Lasso, Hierarchical).
 # SSC-OMP is excluded: not in fingerprint/robustness/BoW tables, saves ~22 h.
 python -u pipeline/05_fingerprint.py --cluster-method spectral
 python -u pipeline/05_fingerprint.py --cluster-method ssc-lasso

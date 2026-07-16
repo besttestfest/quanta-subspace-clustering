@@ -1,7 +1,7 @@
 """Unified plot style for all figure scripts.
 
 Single source of truth for fonts, colours, and figure-saving conventions
-so all figures in the thesis share one visual language.
+so all figures in the paper share one visual language.
 
 Usage:
     from plot_style import apply_style, MODEL_COLORS, METHOD_COLORS, savefig_both

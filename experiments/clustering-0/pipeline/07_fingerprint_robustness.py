@@ -1,6 +1,6 @@
 """Multi-axis robustness analysis of the AI-vs-human fingerprint classifier.
 
-Recomputes Table 5 / Appendix C numbers for the thesis. Reads the fingerprint
+Recomputes Table 5 / Appendix C numbers for the paper. Reads the fingerprint
 matrix saved by pipeline/05_fingerprint.py and reports five metrics per
 (paradigm, model) combination:
 
@@ -20,7 +20,7 @@ Each row is flagged:
 Usage:
   cd experiments/clustering-0
 
-  # Use the canonical hyphen run (recommended for thesis):
+  # Use the canonical hyphen run (recommended for paper):
   QDG_MODEL=pythia-19m  python -u pipeline/07_fingerprint_robustness.py \
       --fp-subdir quanta_fingerprint_ssc-lasso       --paradigm SSC-Lasso
   QDG_MODEL=pythia-19m  python -u pipeline/07_fingerprint_robustness.py \

@@ -1,7 +1,6 @@
-# Scaling Gradient Clustering for Discovery of Fundamental Skills in Language Models
+# Subspace Clustering and the Representational Utility of Quanta Fingerprints
 
-Master's thesis by Martin Nørmark Hansen (SDU IMADA, 2026).
-Supervised by Lukas Galke Poech.
+Anonymous code release for peer review.
 
 This project extends the QDG pipeline from Michaud et al. (NeurIPS 2023) by evaluating four clustering paradigms (Spectral, SSC-Lasso, SSC-OMP, and Hierarchical) to determine which best preserves the power-law distribution that the Quantization Model predicts. We replicate the QDG pipeline from the original paper on Pythia-19m and Pythia-125m, finding that SSC-Lasso achieves the tightest fit on the smaller model (|Δ|=0.008, envelope slope -1.245). We additionally extend the analysis with a quanta-fingerprint AI-vs-human text classifier and an L1 feature-selection study.
 
@@ -10,21 +9,21 @@ Forked from: [ejmichaud/quantization-model](https://github.com/ejmichaud/quantiz
 
 ## Where the results are (no need to run anything)
 
-All thesis results are already committed to this repository, so you can inspect them directly:
+All paper results are already committed to this repository, so you can inspect them directly:
 
-- **Figures** (exact figures from the thesis): [`figures/`](figures/)
+- **Figures** (exact figures from the paper): [`figures/`](figures/)
 - **All table numbers**, with the source file for each: [`CANONICAL_RESULTS.md`](CANONICAL_RESULTS.md)
 - **Archived result data** (JSON, per analysis): [`results-mirror/`](results-mirror/)
 
-These committed artifacts match the thesis one-to-one. The pipeline below regenerates them, but results are reproducible only **within a documented tolerance, not bit-for-bit**: the pipeline uses random seeds and freshly generated AI text on each run. Expect envelope slopes within ±0.005 and MCC within ±0.05-0.10 of the reported values (see [REPRODUCE.md -> Known Differences](REPRODUCE.md)). This is normal for a stochastic ML pipeline and does not indicate an error.
+These committed artifacts match the paper one-to-one. The pipeline below regenerates them, but results are reproducible only **within a documented tolerance, not bit-for-bit**: the pipeline uses random seeds and freshly generated AI text on each run. Expect envelope slopes within ±0.005 and MCC within ±0.05-0.10 of the reported values (see [REPRODUCE.md -> Known Differences](REPRODUCE.md)). This is normal for a stochastic ML pipeline and does not indicate an error.
 
 ## Reproducing from scratch (optional, ~6-8 days on one GPU)
 
 You only need this to regenerate the results above; it is not required to view them.
-Requires a Linux machine with GPU (tested on Tesla V100-SXM2-32GB via UCloud).
+Requires a Linux machine with GPU (tested on a Tesla V100-SXM2-32GB node).
 
 ```bash
-git clone https://github.com/besttestfest/quanta-subspace-clustering.git
+# clone this repository, then:
 cd quanta-subspace-clustering
 pip install -r requirements.txt
 
@@ -33,7 +32,7 @@ export QDG_ENV=local   # or ucloud, sets BASE_DIR (see REPRODUCE.md)
 bash run_all.sh
 ```
 
-`run_all.sh` downloads The Pile test set, computes per-token losses, selects the 10,000 tokens used for clustering, then runs the full pipeline for both Pythia-19m and Pythia-125m and generates all thesis figures.
+`run_all.sh` downloads The Pile test set, computes per-token losses, selects the 10,000 tokens used for clustering, then runs the full pipeline for both Pythia-19m and Pythia-125m and generates all paper figures.
 
 Total runtime is roughly 6-8 days on a single V100 (most of it is the similarity-matrix computation in `pipeline/01_similarity_matrix.py`). See [REPRODUCE.md](REPRODUCE.md) for detailed step-by-step instructions and expected results.
 
@@ -106,7 +105,7 @@ Key findings: SSC-Lasso achieves the best envelope fit on Pythia-19m (|Δ|=0.008
 
 ### Quanta fingerprints: AI-vs-human text classification
 
-All three methods use the same `shared_ai_docs.pkl` corpus, making results directly comparable. MCC values below are from `pipeline/07_fingerprint_robustness.py` (5 seeds × 5-fold CV), archived in `results-mirror/fingerprint_robustness/`, and match the thesis Table 2 values. Re-running the pipeline from scratch regenerates the AI corpus and may shift MCC by ±0.05-0.10 (see REPRODUCE.md §Known Differences).
+All three methods use the same `shared_ai_docs.pkl` corpus, making results directly comparable. MCC values below are from `pipeline/07_fingerprint_robustness.py` (5 seeds × 5-fold CV), archived in `results-mirror/fingerprint_robustness/`, and match the paper Table 2 values. Re-running the pipeline from scratch regenerates the AI corpus and may shift MCC by ±0.05-0.10 (see REPRODUCE.md §Known Differences).
 
 | Model | Clustering | MCC (5-seed CV) |
 |---|---|---:|

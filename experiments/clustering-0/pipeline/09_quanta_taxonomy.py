@@ -1,7 +1,7 @@
 """Per-cluster token taxonomy for Spectral, SSC-Lasso, and Hierarchical clusters.
 
 Builds quanta_taxonomy_{method}_k400.pkl for each of the three clustering
-methods used in the thesis. These files are required by:
+methods used in the paper. These files are required by:
     figures/fig_04_taxonomy.py
     figures/fig_12_13_taxonomy_detail.py
 

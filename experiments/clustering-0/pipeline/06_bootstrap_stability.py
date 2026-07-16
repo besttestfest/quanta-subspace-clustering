@@ -267,7 +267,7 @@ for iter_idx in remaining:
     # hi=1000) would often exceed the available rank range. The bootstrap
     # slope is therefore NOT directly comparable to the paper target (-1.237)
     # and is stored for diagnostic purposes only - NMI/ARI are the primary
-    # bootstrap metrics reported in the thesis
+    # bootstrap metrics reported in the paper
     slope = envelope_slope(boot_labels, lo=10, hi=min(400, n_sub - 1))
 
     elapsed = time.time() - t_iter

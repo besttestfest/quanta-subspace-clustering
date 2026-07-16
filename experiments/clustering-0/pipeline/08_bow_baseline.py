@@ -1,7 +1,7 @@
 """Bag-of-Words (TF-IDF) baseline for AI-vs-human classification.
 
 Fair comparison against the quanta fingerprint classifier (pipeline/05_fingerprint.py):
-uses the SAME documents (784 human, ~497 AI; thesis Table 6 / Appendix D), the same
+uses the SAME documents (784 human, ~497 AI; paper Table 6 / Appendix D), the same
 5-seed x 5-fold stratified CV protocol, and the same L2 logistic-regression setup as
 pipeline/07_fingerprint_robustness.py.
 
@@ -15,7 +15,7 @@ Documents:
     if the shared file does not exist yet.
 TF-IDF vocabulary and IDF weights are fitted inside each training fold only.
 
-Usage (UCloud, GPU node - run pipeline/05_fingerprint.py first so shared_ai_docs.pkl exists):
+Usage (GPU node - run pipeline/05_fingerprint.py first so shared_ai_docs.pkl exists):
     cd experiments/clustering-0
     QDG_MODEL=pythia-19m  python pipeline/08_bow_baseline.py
     QDG_MODEL=pythia-125m python pipeline/08_bow_baseline.py
@@ -131,7 +131,7 @@ tokenizer = AutoTokenizer.from_pretrained(
 )
 
 # Reuse the SAME AI corpus as the fingerprint experiment (pipeline/05_fingerprint.py)
-# so the BoW baseline is computed on identical documents (thesis Table 6 / Appendix D).
+# so the BoW baseline is computed on identical documents (paper Table 6 / Appendix D).
 # Generate the corpus here only as a fallback if the shared file does not exist yet.
 shared_ai_path = os.path.join(PATHS["results_dir"], "shared_ai_docs.pkl")
 if os.path.exists(shared_ai_path):

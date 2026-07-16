@@ -1,6 +1,6 @@
 """Publication figures: Methods comparison (fig_05_10_methods.py).
 
-Generates six figures used in the thesis appendix:
+Generates six figures used in the paper appendix:
   fig_05_method_overlay_19m      - envelope overlay + |Δ| bar chart (Pythia-19M)
   fig_06_method_overlay_125m     - envelope overlay + |Δ| bar chart (Pythia-125M)
   fig_07_ssc_evaluation_19m      - SSC-Lasso hyperparameter heatmap (Pythia-19M)

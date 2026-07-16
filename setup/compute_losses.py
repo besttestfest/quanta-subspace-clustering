@@ -3,10 +3,10 @@ Compute per-token cross-entropy losses for Pythia models on The Pile.
 
 Evaluates each model on 200k documents and saves losses as a numpy array.
 Only pythia-19m is needed for token selection, but pythia-125m is also
-evaluated as it is the second model used in this thesis.
+evaluated as it is the second model used in this paper.
 
 Adapted from original/experiments/pythia-2/eval.py (Michaud et al.)
-with paths updated for UCloud.
+with paths updated for this project.
 
 Requires GPU. Runtime: ~1h per model on V100.
 

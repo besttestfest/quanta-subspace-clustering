@@ -1,6 +1,6 @@
 """Publication figures: Rank-frequency and similarity structure (fig_01_02_overview.py).
 
-Generates two figures used in the thesis main body:
+Generates two figures used in the paper main body:
   fig_01_rank_frequency      - rank-frequency envelope (Pythia-19M and Pythia-125M)
   fig_02_similarity_structure - gradient-similarity matrix and cross-model structure
 
