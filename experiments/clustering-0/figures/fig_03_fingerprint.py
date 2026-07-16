@@ -7,9 +7,11 @@ Generates one figure used in the paper main body:
 
 Panel (c) reports the 5-seed x 5-fold mean MCC produced by
 pipeline/07_fingerprint_robustness.py, which is the same number reported in
-the paper's Table 2. Balanced accuracy is deliberately not shown: it was a
-single-seed value from 05_fingerprint.py and therefore disagreed with the
-5-seed MCC in the table.
+the MCC column of the paper's Table 2. The bars show single-seed balanced
+accuracy from 05_fingerprint.py, matching Table 2's balanced-accuracy column.
+Do not label the bars with 05_fingerprint.py's own logreg_mcc: that is a
+single-seed value and disagrees with the 5-seed MCC in the table (+0.876 vs
++0.884 on Pythia-19M).
 
 Figure is written to {REPO_DIR}/figures/contribution-3/.
 
@@ -202,7 +204,10 @@ ax.set_title("(b) Fingerprint similarity: Human vs AI")
 ax = axes[1, 0]
 accuracies = [fp_results[m]["logreg_accuracy"] for m in models]
 stds = [fp_results[m]["logreg_std"] for m in models]
-mccs = [fp_results[m].get("logreg_mcc") for m in models]
+# Use the 5-seed x 5-fold mean MCC from 07_fingerprint_robustness.py, not the
+# single-seed value in 05_fingerprint.py's results.json. The latter disagrees
+# with Table 2 (e.g. +0.876 vs +0.884 on Pythia-19M).
+mccs = [robust_mcc[m][0] for m in models]
 colors = [MODEL_COLORS[m] for m in models]
 bars = ax.bar(models, [100 * a for a in accuracies],
               yerr=[100 * s for s in stds],
