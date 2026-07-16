@@ -1,8 +1,14 @@
-# Subspace Clustering and the Representational Utility of Quanta Fingerprints
+# Revisiting Quanta Discovery from Gradients with Subspace Clustering
 
 Anonymous code release for peer review.
 
-This project extends the QDG pipeline from Michaud et al. (NeurIPS 2023) by evaluating four clustering paradigms (Spectral, SSC-Lasso, SSC-OMP, and Hierarchical) to determine which best preserves the power-law distribution that the Quantization Model predicts. We replicate the QDG pipeline from the original paper on Pythia-19m and Pythia-125m, finding that SSC-Lasso achieves the tightest fit on the smaller model (|Δ|=0.008, envelope slope -1.245). We additionally extend the analysis with a quanta-fingerprint AI-vs-human text classifier and an L1 feature-selection study.
+Code for the paper of the same name. A recent theory of neural scaling proposes that a language model's capabilities decompose into discrete chunks known as *quanta*, discoverable by clustering per-token gradients. Existing work identifies quanta with a single clustering algorithm and judges them only by whether their size distribution follows the predicted power law. We argue that a clustering method should be evaluated on two criteria: its **envelope fit** (how well it recovers the predicted size distribution) and its **representational utility** (how useful the resulting clusters are as document-level features).
+
+This repository contains the code for all three contributions of the paper:
+
+1. A reproduction of the quanta-discovery findings of Michaud et al. (2023) on Pythia-19m and Pythia-125m, establishing a reproducible baseline with an envelope methodology.
+2. A controlled comparison of four clustering paradigms (Spectral, SSC-Lasso, SSC-OMP, Hierarchical) on envelope fit, and of three of them (Spectral, SSC-Lasso, Hierarchical) on representational utility in a downstream task.
+3. The central result: a better power-law fit does not entail higher representational utility. SSC-Lasso fingerprints outperform every evaluated paradigm on AI-versus-human text classification (MCC 0.884 on Pythia-19m, 0.960 on Pythia-125m), even though spectral clustering achieves the better envelope fit on the larger model.
 
 Based on: [The Quantization Model of Neural Scaling](https://arxiv.org/abs/2303.13506) (Michaud et al., 2023).
 Forked from: [ejmichaud/quantization-model](https://github.com/ejmichaud/quantization-model).
